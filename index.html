@@ -139,8 +139,8 @@
                 let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
                 if (distance < 50) {
-                    this.speedX += (deltaX / distance) * 0.3;
-                    this.speedY += (deltaY / distance) * 0.3;
+                    this.speedX += (deltaX / distance) * 1;
+                    this.speedY += (deltaY / distance) * 1;
                 }
             }
             moveSlime() {
