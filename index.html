@@ -1,0 +1,190 @@
+<html>
+<head>
+    <title>Shawn's homepage</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background: #000;
+        }
+        .slime-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slime {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #51ff00;
+            border-radius: 5px;
+        }
+        .portfolio-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background: #00000000;
+            
+            padding: 20px;
+            text-align: center;
+        }
+        .portfolio-container h2 {
+            font-size: 40px;
+            color: #FFF;
+            margin: 0 0 10px;
+            padding: 0;
+        }
+        .portfolio-container p {
+            margin: 0;
+            color : #FFF;
+            padding: 0;
+            font-size: 16px;
+        }
+        .portfolio-container a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px;
+            background: #8800ff;
+            color: #FFF;
+            font-size: 18px;
+            margin: 20px 0 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slime-container">
+        
+    </div>
+    <div class="portfolio-container">
+        <h2>Hi, I'm Shawn Daumer</h2>
+        <p>I'm a full stack web developer, specializing in developing responsive and interactive web applications.</p>
+        <a href="programs.html">View Projects</a>
+    </div>
+    <script>
+        // Slime playground
+        let slimeContainer = document.querySelector(".slime-container");
+        let slimeArray = [];
+        // Slime class
+        class Slime {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.speedX = Math.random() * 4 - 2;
+                this.speedY = Math.random() * 4 - 2;
+                this.maxSpeed = 4;
+                this.minSpeed = -4;
+            }
+            createSlime() {
+                let slimeDiv = document.createElement("div");
+                slimeDiv.classList.add("slime");
+                slimeDiv.style.left = this.x + "px";
+                slimeDiv.style.top = this.y + "px";
+                slimeContainer.appendChild(slimeDiv);
+            }
+            updateSlimePosition() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+            }
+            updateSlimeSpeed() {
+                if (this.speedX > this.maxSpeed) {
+                    this.speedX = this.maxSpeed;
+                }
+                if (this.speedX < this.minSpeed) {
+                    this.speedX = this.minSpeed;
+                }
+                if (this.speedY > this.maxSpeed) {
+                    this.speedY = this.maxSpeed;
+                }
+                if (this.speedY < this.minSpeed) {
+                    this.speedY = this.minSpeed;
+                }
+            }
+            wallCollision() {
+                if (this.x >= slimeContainer.offsetWidth - 10) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.x <= 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y >= slimeContainer.offsetHeight - 10) {
+                    this.speedY = -this.speedY;
+                }
+                if (this.y <= 0) {
+                    this.speedY = -this.speedY;
+                }
+            }
+            slimeCollision(otherSlime) {
+                let deltaX = this.x - otherSlime.x;
+                let deltaY = this.y - otherSlime.y;
+                let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                if (distance <= 10) {
+                    this.speedX = -this.speedX;
+                    this.speedY = -this.speedY;
+                    otherSlime.speedX = -otherSlime.speedX;
+                    otherSlime.speedY = -otherSlime.speedY;
+                }
+            }
+            mouseCollision(mouseX, mouseY) {
+                let deltaX = this.x - mouseX;
+                let deltaY = this.y - mouseY;
+                let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                if (distance < 50) {
+                    this.speedX += (deltaX / distance) * 0.3;
+                    this.speedY += (deltaY / distance) * 0.3;
+                }
+            }
+            moveSlime() {
+                this.updateSlimePosition();
+                this.updateSlimeSpeed();
+                this.wallCollision();
+                for (let i = 0; i < slimeArray.length; i++) {
+                    this.slimeCollision(slimeArray[i]);
+                }
+                let slimeDiv = document.querySelectorAll(".slime");
+                for (let i = 0; i < slimeDiv.length; i++) {
+                    slimeDiv[i].style.left = slimeArray[i].x + "px";
+                    slimeDiv[i].style.top = slimeArray[i].y + "px";
+                }
+            }
+        }
+        // Create slimes
+        function createSlime() {
+            let x = Math.random() * (slimeContainer.offsetWidth - 10);
+            let y = Math.random() * (slimeContainer.offsetHeight - 10);
+
+            let slime = new Slime(x, y);
+            slime.createSlime();
+            slimeArray.push(slime);
+        }
+        for (let i = 0; i < 200; i++) { // set number of slimes
+            createSlime();
+        }
+        // Move slimes
+        function moveSlime() {
+            for (let i = 0; i < slimeArray.length; i++) { 
+                slimeArray[i].moveSlime();
+            }
+        }
+        setInterval(moveSlime, 100);
+        // Slime repel from mouse
+        slimeContainer.addEventListener("mousemove", function(e){
+            let mouseX = e.offsetX;
+            let mouseY = e.offsetY;
+
+            for (let i = 0; i < slimeArray.length; i++) {
+                slimeArray[i].mouseCollision(mouseX, mouseY);
+            }
+        });
+    </script>
+</body>
+</html>
