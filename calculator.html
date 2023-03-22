@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+    <style>
+    body{
+        background-color: #ffffff;
+    }
+    .container{
+        width: 1000px;
+        height: 550px;
+        margin: 20px auto;
+    }
+    .calculator{
+        padding: 5px;
+        width: 320px;
+        height: 550px;
+        background-color: #3246a7;
+        margin: 0 auto;
+        top: 20px;
+        position: relative;
+        border-radius: 16px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.19);
+    }
+    .result{
+        height: 110px;
+        background-color: #a0a0a0;
+        border-radius: 16px;
+        margin: 20px;
+    }
+    .history{
+        text-align: right;
+        height: 10px;
+        margin: 0 20px;
+        padding-top: 20px;
+        font-size: 15px;
+        color: #000000;
+    }
+    .output{
+        text-align: right;
+        height: 60px;
+        margin: 10px 20px;
+        font-size: 30px;
+    }
+    .keyboard{
+        height:400px;
+    }
+    .operator, .number, .decimal, #clear, #backspace, #percentage, #decimal{
+        width: 50px;
+        height: 50px;
+        margin: 15px;
+        float: left;
+        border-radius: 50%;
+        border-width: 0;
+        font-weight: bold;
+        font-size: 15px;   
+    }
+    #equal{ 
+        width: 120px;
+        border-radius: 20px;
+    }
+    .number, .empty{
+        background-color: #f2f2f2;
+    }
+    .operator, .decimal{
+        background-color: #a8a8a8;
+    }
+    .number, .operator, .decimal, #clear, #backspace, #percentage, #decimal{
+        cursor: pointer;
+    }
+    .operator:active, .number:active, .decimal:active, #clear:active, #backspace:active, #percentage:active, #decimal:active{
+        font-size: 13px;
+    }
+    .operator:focus, .number:focus, .empty:focus, .decimal:focus{
+        outline: none;
+    }
+    .operator:nth-child(4){
+        font-size: 20px;
+        background-color: #747474;
+    }
+    .operator:nth-child(8){
+        font-size: 20px;
+        background-color: #747474;
+    }
+    .operator:nth-child(12){
+        font-size: 20px;
+        background-color: #747474;
+    }
+    .operator:nth-child(16){
+        font-size: 20px;
+        background-color: #747474;
+    }
+    .operator:nth-child(20){
+        font-size: 20px;
+        background-color: #747474;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <div class="result">
+                <div class="history">
+                    <p id="history-value"></p>
+                </div>
+                <div class="output">
+                    <p id="output-value"></p>
+                </div>
+            </div>
+            <div class="keyboard">
+                            <!-- row 1 -->
+                <button id="clear">C</button>
+                <button id="backspace">&larr;</button>
+                <button id="percentage">%</button>
+                <button class="operator" value="/">/</button>
+
+                            <!-- row 2 -->
+                <button class="number" value="7">7</button>
+                <button class="number" value="8">8</button>
+                <button class="number" value="9">9</button>
+                <button class="operator" value="*">*</button>
+                        
+                            <!-- row 3 -->
+                <button class="number" value="4">4</button>
+                <button class="number" value="5">5</button>
+                <button class="number" value="6">6</button>
+                <button class="operator" value="-">-</button>
+                
+                            <!-- row 4 -->
+                <button class="number" value="1">1</button>
+                <button class="number" value="2">2</button>
+                <button class="number" value="3">3</button>
+                <button class="operator" value="+">+</button>
+
+                            <!-- row 5 -->
+                <button class="number" value="0">0</button>
+                <button id="decimal">.</button>
+                <button class="operator" id="equal">=</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // get all the buttons with the class of number
+        const numbers = document.querySelectorAll('.number');
+        // get all the buttons with the class of operator
+        const operators = document.querySelectorAll('.operator');
+        // get the clear button
+        const clearBtn = document.getElementById('clear');
+        // get the backspace button
+        const backspaceBtn = document.getElementById('backspace');
+        // get the percentage button
+        const percentageBtn = document.getElementById('percentage');
+        // get the decimal button
+        const decimalBtn = document.getElementById('decimal');
+        // get the equal button
+        const equalBtn = document.getElementById('equal');
+        // get the history element
+        const historyElement = document.getElementById('history-value');
+        // get the output element
+        const outputElement = document.getElementById('output-value');
+
+        // function to add event listener to each number
+        const addNumberEventListener = (number) => {
+            number.addEventListener('click', (e) => {
+                outputElement.innerText += e.target.value;
+            });
+        };
+
+        // function to add event listener to each operator
+        const addOperatorEventListener = (operator) => {
+            operator.addEventListener('click', (e) => {
+                historyElement.innerText += `${outputElement.innerText} ${e.target.value} `;
+                outputElement.innerText = '';
+            });
+        };
+
+        // add event listener to clear button
+        clearBtn.addEventListener('click', () => {
+            historyElement.innerText = '';
+            outputElement.innerText = '';
+        });
+
+        // add event listener to backspace button
+        backspaceBtn.addEventListener('click', () => {
+            outputElement.innerText = outputElement.innerText.slice(0, -1);
+        });
+
+        // add event listener to percentage button
+        percentageBtn.addEventListener('click', () => {
+        outputElement.innerText = `${parseFloat(outputElement.innerText) / 100}`;
+        });
+
+        // add event listener to decimal button
+        decimalBtn.addEventListener('click', () => {
+            outputElement.innerText += '.';
+        });
+
+        // add event listener to equal button
+        equalBtn.addEventListener('click', () => {
+            historyElement.innerText += `${outputElement.innerText}`;
+            outputElement.innerText = eval(historyElement.innerText);
+            historyElement.innerText = '';
+        });
+
+        // loop through numbers and add event listener to each one
+        numbers.forEach((number) => {
+            addNumberEventListener(number);
+        });
+
+        // loop through operators and add event listener to each one
+        operators.forEach((operator) => {
+            addOperatorEventListener(operator);
+        });
+    </script>
+</body>
+</html>
