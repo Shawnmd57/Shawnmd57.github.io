@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <style>
+        html {
+            min-width: 100%;
+            min-height: 100%;
+        }
+        body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #ffffff;
+            overflow-x: hidden;
+
+        }
+        .bg-container{
+            position: absolute;
+            top: 0;
+            background-color: black;
+        }
+        .bg-image{
+            background-image: url("https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            filter: blur(5px);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+        }
+        .container{
+            flex: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 51%;
+        }
+        .pfp{
+            border-radius: 50%;
+            border: 1px solid #fff;
+            box-shadow: #fff 0 0 10px;
+        }
+        h1{
+            color: #fff;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+        .bio{
+            background-color: #0000005c;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+            font-weight: 300;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+        .container a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px;
+            background: #8800ff;
+            color: #FFF;
+            font-size: 18px;
+            margin: 30px 15px;
+            border-radius: 5px;
+        }
+        a:active {
+            background-color: #6400bc;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="bg-container">
+        <div class="bg-image"></div>
+    </div>
+    <div class="container">
+        <img class="pfp" src="https://media.licdn.com/dms/image/C4E03AQHKCNCrD7X2jQ/profile-displayphoto-shrink_800_800/0/1645819251380?e=2147483647&v=beta&t=Zo0gOFBYkd8cux1l6D9RYVP1wajKZt8i_cHHjt6Uwy4" alt="profile" width="200" height="200">
+        <h1>Email: Shawndaumer@gmail.com | Github: Shawnmd57 </h1>
+        <p class="bio">I'm Shawn, a software developer with a deep passion for coding and creating innovative solutions to challenging problems. 
+            I chose this profession because of my love for the creativity and problem-solving that programming brings. 
+            I'm driven by the challenges that coding presents and the feeling of accomplishment I get when I solve a difficult problem. 
+            To ensure I'm creating the best possible solutions, I'm constantly learning new technologies and languages to expand my skill set. 
+            My aspirations are to become an expert in software development and contribute to applications that will revolutionize the way people interact with technology. 
+            I'm committed to making sure that every website I create is easily accessible to everyone, regardless of ability, and that it works as intended. 
+            I'm passionate about coding and web development and I'm excited to see what the future holds for this field. 
+            I'm continually looking for new ways to push the boundaries of what's possible and I'm committed to making an impact through my work.
+        </p>
+        <nav>
+            <a href="./programs.html">Programs</a>
+            <a href="./index.html">Home</a>
+        </nav>
+    </div>
+</body>
+</html>
